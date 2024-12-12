@@ -63,3 +63,19 @@ An example scenario that utilizes all endpoints is:
 - Run the fourth request to delete it
 - Run the first request to see that there no longer exists a book like the one you created.
 - Run the fifth request to update the book "Return Of The King" so it is "Lord of the Rings: The Return of the King".
+
+## Possible improvements
+
+Consider utilizing multiple appsettings.json files to make it easier to switch for example host in the database connection string.
+
+Consider moving more functionality to the startup.cs file instead of having it in program.cs
+
+Consider utilizing Dtos for all books incoming/outgoing from endpoints.
+
+Consider creating database constraints on id and titles
+
+Consider ensuring consistent output structure from endpoints (e.g. validation errors use the same information model as database conflicts)
+
+Consider adding more error handling. (For example try catches in database operations)
+
+Consider fleshing out the swagger documentation
