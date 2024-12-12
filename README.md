@@ -1,32 +1,51 @@
 # Bookstore
 
 
-## Startup
+## Startup Locally
 
-docker compose up
+To start the database only run:
 
-Start IIS Express via visual studio
+```
+docker compose up postgres
+```
 
+Then start the program in visual studio with the IIS Express profile
 
-To reset the database, perform:
+NOTE: This requires you to have postgres setup in your hosts file to point to localhost. You may also edit the appsettings.json connection string to refer to localhost instead of postgres.
 
-docker compose down --volumes
+## Startup within docker
 
+Publish the application (only required if you've made edits)
 
-// TODO
 ```
 dotnet publish -c Release -o out
+```
 
-docker build -t bookstore:latest .
+Start the program and the database with:
 
+```
+docker compose up
+```
 
+Then the application is running on port 8080. Feel free to call it with the postman requests.
+
+To exit press CTRL + C or perform:
+
+```
+docker compose down
+```
+
+The database is saved between runs. To remove the volume, run:
+
+```
+docker compose down --volumes
 ```
 
 ## Usage (postman)
 
-To use the application. Start by starting it as seen in *Startup*.
+To use the application. Start by starting it as seen in *Startup within docker*.
 
-When the application is running import the postman collection in the `postman` directory.
+When the application is running import the postman collection in the `postman` directory. Use the IIS Express collection if you are running C# in Visual Studio instead of the docker container
 
 In it there exists 5 requests, one per endpoint.
 

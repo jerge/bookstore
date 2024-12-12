@@ -1,17 +1,24 @@
 services:
 # TODO run the C# app in the docker container
-  # bookstore:
-  #   image: bookstore:latest
-  #   build:
-  #     context: .
-  #   ports:
-  #     - "8080:8080"
+  bookstore:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   postgres:
     image: postgres:17
     environment:
       POSTGRES_DB: postgres
       POSTGRES_HOST_AUTH_METHOD: trust  # This line disables authentication
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "5432:5432"
     volumes:
