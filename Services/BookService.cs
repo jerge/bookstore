@@ -89,7 +89,7 @@ namespace bookstore.Services
             }
             _dbContext.BookEntities.Add(entity);
             await _dbContext.SaveChangesAsync();
-            
+
             return true;
         }
 
