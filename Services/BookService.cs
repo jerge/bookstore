@@ -10,6 +10,8 @@ namespace bookstore.Services
         public Task<IEnumerable<Book>> Get();
         public Task<Book?> Get(Guid guid);
         public Task<bool> Create(Book book);
+        public Task<bool> Update(Guid guid, string title);
+        public Task<bool> Delete(Guid guid);
     }
 
     public class BookService : IBookService
@@ -90,5 +92,45 @@ namespace bookstore.Services
             
             return true;
         }
+
+        /// <summary>
+        /// Updates the title of a book
+        /// </summary>
+        /// <param name="guid">Book to update</param>
+        /// <param name="title">Desired title</param>
+        /// <returns>If the update was successful</returns>
+        public async Task<bool> Update(Guid guid, string title)
+        {
+            var bookToUpdate = await _dbContext.BookEntities.FindAsync(guid);
+
+            if (bookToUpdate == null)
+            {
+                return false;
+            }
+
+            bookToUpdate.Title = title;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        /// <summary>
+        /// Deletes a specific book
+        /// </summary>
+        /// <param name="guid">The book to delete</param>
+        /// <returns>If the deletion was succesful</returns>
+        public async Task<bool> Delete(Guid guid)
+        {
+            var bookToDelete = await _dbContext.BookEntities.FindAsync(guid);
+
+            if (bookToDelete == null)
+            {
+                return false;
+            }
+
+            _dbContext.BookEntities.Remove(bookToDelete);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
     }
 }
