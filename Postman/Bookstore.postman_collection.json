@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "52c53478-6b04-4e8f-b22e-99ffd4094f2a",
+		"name": "Bookstore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28214219"
+	},
+	"item": [
+		{
+			"name": "All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44347/books",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44347",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44347/books/0e01c4ab-7cb9-4185-9744-9efd35129641",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44347",
+					"path": [
+						"books",
+						"0e01c4ab-7cb9-4185-9744-9efd35129641"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"3f873342-70b6-4fb4-bfb4-116281877716\",\r\n  \"title\": \"The Name of the Wind\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44347/books/create",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44347",
+					"path": [
+						"books",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44347/books/delete/3f873342-70b6-4fb4-bfb4-116281877716",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44347",
+					"path": [
+						"books",
+						"delete",
+						"3f873342-70b6-4fb4-bfb4-116281877716"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update by id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "title",
+						"value": "Lord of the Rings: The Return of the King",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44347/books/update/0e01c4ab-7cb9-4185-9744-9efd35129641",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44347",
+					"path": [
+						"books",
+						"update",
+						"0e01c4ab-7cb9-4185-9744-9efd35129641"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -69,7 +69,7 @@ namespace bookstore.Controllers
         [HttpPut("update/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Create(Guid id, string title)
+        public async Task<ActionResult> Update(Guid id, [FromHeader] string title)
         {
             if (string.IsNullOrEmpty(title))
             {
