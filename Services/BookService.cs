@@ -1,12 +1,13 @@
 ﻿using bookstore.Database;
 using bookstore.Models;
-using bookstore.Models.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace bookstore.Services
 {
     public interface IBookService
     {
-        public IEnumerable<Book> Get();
+        public Task<IEnumerable<Book>> Get();
+        public Task<Book> Get(Guid guid);
     }
 
     public class BookService : IBookService
@@ -22,18 +23,34 @@ namespace bookstore.Services
         }
 
 
-        public IEnumerable<Book> Get()
+        public async Task<IEnumerable<Book>> Get()
         {
             _logger.LogDebug("Fetching books from database");
 
-            var books = _dbContext.BookEntities
+            var books = await _dbContext.BookEntities
                 .Select(book => new Book
                 {
                     Id = book.Id,
                     Title = book.Title,
-                }).ToList();
+                }).ToListAsync();
             _logger.LogDebug("{Amount} books fetched", books.Count);
             return books;
+        }
+
+        public async Task<Book?> Get(Guid guid)
+        {
+            _logger.LogDebug("Fetching book {Id} from database", guid);
+
+            Book? book = await _dbContext.BookEntities
+                .Where(b => b.Id == guid)
+                .Select(b => new Book
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                })
+                .FirstOrDefaultAsync();
+            _logger.LogDebug("{Amount} books fetched", book);
+            return book;
         }
     }
 }

@@ -1,5 +1,4 @@
 using bookstore.Models;
-using bookstore.Models.Dtos;
 using bookstore.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,18 +20,29 @@ namespace bookstore.Controllers
 
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IEnumerable<BookDto> Get()
+        public async Task<ActionResult<IEnumerable<Book>>> Get()
         {
             _logger.LogDebug("Getting all books");
 
-            var books = _bookService.Get()
-                .Select(book => new BookDto
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                });
+            var books = await _bookService.Get();
 
-            return  books;
+            return Ok(books);
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Book>> Get(Guid id)
+        {
+            _logger.LogDebug("Getting book {Id}", id);
+
+            var book = await _bookService.Get(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return Ok(book);
         }
     }
 }
