@@ -1,5 +1,6 @@
 using bookstore.Models;
 using bookstore.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookstore.Controllers
@@ -43,6 +44,27 @@ namespace bookstore.Controllers
                 return NotFound();
             }
             return Ok(book);
+        }
+
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult> Create(Book book)
+        {
+            if (string.IsNullOrEmpty(book.Title))
+            {
+                return BadRequest("Book requires a non empty title");
+            }
+            _logger.LogDebug("Adding book with id {Id}", book.Id);
+
+            var success = await _bookService.Create(book);
+
+            if (!success)
+            {
+                return Conflict();
+            }
+            return Created(string.Empty, null);
         }
     }
 }
