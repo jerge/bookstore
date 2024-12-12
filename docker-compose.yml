@@ -1,0 +1,22 @@
+services:
+# TODO run the C# app in the docker container
+  # bookstore:
+  #   image: bookstore:latest
+  #   build:
+  #     context: .
+  #   ports:
+  #     - "8080:8080"
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust  # This line disables authentication
+    ports:
+      - "5432:5432"
+    volumes:
+    - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    
